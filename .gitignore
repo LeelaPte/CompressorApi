@@ -1,0 +1,22 @@
+# Ignore node_modules
+node_modules
+
+# Ignore all logfiles and tempfiles.
+/log/*
+/tmp/*
+
+# Ignore public stuff
+/public/uploads
+
+# DS store madness
+*.DS_Store
+
+# Env
+.env
+.env.development
+.env.test
+
+# Procfiles
+Procfile.development
+
+yarn-error.log*
