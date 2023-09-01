@@ -3,6 +3,7 @@ require:
   - rubocop-rspec
 
 AllCops:
+  SuggestExtensions: false
   Exclude:
     - "node_modules/**/*"
     - "vendor/**/*"
