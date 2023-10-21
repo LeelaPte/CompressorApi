@@ -46,7 +46,7 @@ class BuilderService
 
   def row_distribution(row)
     headers.each_with_object([]) do |header, items|
-      items << row[header] if row[header].present?
+      items << (row[header].presence || '')
     end
   end
 
