@@ -22,6 +22,32 @@ RSpec.describe BuilderService do
       end
     end
 
+    context 'when a row contains a nil value' do
+      let(:file_structure) do
+        {
+          filename: 'pano_file1.xlsx',
+          headers: %w[A B C D],
+          rows: [
+            { 'A' => 1, 'B' => nil, 'C' => nil, 'D' => 2 },
+            { 'A' => 1, 'B' => nil, 'C' => false, 'D' => 2 }
+          ]
+        }
+      end
+      let(:expected_row) { { head1: 1, head2: nil, head3: nil, head4: 2 } }
+      let(:tmp_file) { Roo::Spreadsheet.open(subject[:stream], extension: :xlsx) }
+      let(:tmp_file_rows) { tmp_file.each_with_pagename.to_a.flatten.last }
+
+      it 'returns the correct data structure' do
+        expect(subject.keys).to match(%i[filename stream])
+      end
+
+      it 'returns the expected file with correct format' do
+        expect(tmp_file_rows.row(1)).to eq(file_structure[:headers])
+        expect(tmp_file_rows.row(2)).to eq(expected_row.values)
+        expect(tmp_file_rows.row(3)).to eq(expected_row.values)
+      end
+    end
+
     context 'when file_structure param is blank' do
       let(:file_structure) { {} }
 
